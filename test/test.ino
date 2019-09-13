@@ -1,5 +1,3 @@
-#include <SoftwareSerial.h>
-
 int LED = 13;
 int toggle = 0;
 
@@ -15,18 +13,21 @@ void setup()
     Serial.begin(9600); // opens serial port, sets data rate to 9600 bps
     Serial1.begin(9600);
     
-    Serial.setTimeout(1);
-    Serial1.setTimeout(1);
+//    Serial.setTimeout(1); // sets the timeout time when reading bytes. If this time passes and the arduino is still reading we stop reading bytes
+//    Serial1.setTimeout(1); // deafault value is 1000ms
     
-    Serial.println("Running example: Servo motor actuation using messaging");
+    Serial.println("Running example: Deans list!");
     pinMode(LED, OUTPUT);
 }
 
 void loop(){
 
   if (Serial1.available()) {
-    Serial.write(Serial1.read());
-    toggle = toggle == 0 ? 1 : 0;
+    int num = Serial1.read();
+    if (num == 1) {
+      Serial.write(num);
+      toggle = toggle == 0 ? 1 : 0;
+    }
   }
    
 
